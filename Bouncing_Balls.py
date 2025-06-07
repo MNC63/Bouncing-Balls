@@ -25,13 +25,16 @@ while running:
         
         ball_vel[1] += GRAVITY # Apply gravity to the ball's vertocal velocity
         #ball_vel[1] = ball_vel [1] + GRAVITY
-        ball_pos[0] += ball_vel[0]
-        ball_pos[1] += ball_vel[1]
+        # ball_pos[0] += ball_vel[0]
+        # ball_pos[1] += ball_vel[1]
+        ball_pos += ball_vel
         # Update the ball's position based on its velocity
         dist = np.linalg.norm(ball_pos - CIRCLE_CENTER)
         # Check if the ball is outside the circle
         if dist + BALL_RADIUS > CIRCLE_RADIUS:
             d = ball_pos - CIRCLE_CENTER
+            d_unit = d / np.linalg.norm(d)
+            ball_pos = CIRCLE_CENTER + (CIRCLE_RADIUS - BALL_RADIUS) * d_unit
             t = np.array([-d[1],d[0]], dtype=np.float64)
             proj_v_t = (np.dot(ball_vel, t)/np.dot(t, t)) * t 
             # Calculate the projection of the ball's velocity onto the tangent vector
